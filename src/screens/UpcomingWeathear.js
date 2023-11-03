@@ -1,6 +1,6 @@
-import  React from 'react';
-import { View,Text, SafeAreaView, StyleSheet, FlatList, StatusBar } from "react-native"; 
-import { Feather } from '@expo/vector-icons'; 
+import  React from 'react'
+import { View,Text, SafeAreaView, StyleSheet, FlatList, StatusBar, ImageBackground } from "react-native"
+import { Feather } from '@expo/vector-icons'
 
 
 
@@ -65,14 +65,11 @@ const UpcomingWeather = () => {
       
     return (
         <SafeAreaView styles={styles.container}>
+        <ImageBackground source={require('../../assets/upcoming-background.jpg')} style={styles.image}>
             <Text>UpcomingWeather</Text>
-
-            <FlatList
-                data={DATA}
-                renderItem={renderItem}
-                keyExtractor={(item.dt_txt)}
-            />
-
+        
+            <FlatList data={DATA} renderItem={renderItem} keyExtractor={(item.dt_txt)} />
+        </ImageBackground>
         </SafeAreaView>
     )
 }
@@ -81,7 +78,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginTop: StatusBar.currentHeight || 0,
-        backgroundColor: 'red'
+        backgroundColor: 'royalblue',
     },
     item: {
         padding: 20,
@@ -91,14 +88,15 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'center',
         borderWidth:5,
-        backgroundColor:'pink'
-
+        backgroundColor:'pink',
     },
     temp: {
         color: 'white',
         fontSize:20,
-    }
-
+    },
+    image: {
+        flex:1,
+    },
 })
 
 
