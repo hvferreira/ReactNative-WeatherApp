@@ -1,103 +1,49 @@
-import  React from 'react'
-import { View,Text, SafeAreaView, StyleSheet, FlatList, StatusBar, ImageBackground } from "react-native"
-import { Feather } from '@expo/vector-icons'
+import React from 'react'
+import {
+  SafeAreaView,
+  StyleSheet,
+  FlatList,
+  StatusBar,
+  ImageBackground
+} from 'react-native'
+import ListItem from '../components/ListItem'
 
+const UpcomingWeather = ({ weatherData }) => {
+  const renderItem = ({ item }) => (
+    <ListItem
+      condition={item.weather[0].main}
+      dt_txt={item.dt_txt}
+      min={item.main.temp_min}
+      max={item.main.temp_max}
+    />
+  )
 
-
-
-const DATA = [
-    { 
-        dt_txt: "2023-02-18 12:00:00",
-        main: {
-            temp_max:8.55,
-            temp_min:7.55
-        },
-        wheather: [
-            {
-                main:'Clear'
-            }
-        ]
-    },
-    { 
-        dt_txt: "2023-02-18 15:00:00",
-        main: {
-            temp_max:8.55,
-            temp_min:7.55
-        },
-        wheather: [
-            {
-                main:'Clouds'
-            }
-        ]
-    },
-    {
-        dt_txt: "2023-02-18 18:00:00",
-        main: {
-            temp_max:8.55,
-            temp_min:7.55
-        },
-        wheather: [
-            {
-                main:'Rain'
-            }
-        ]
-     }
-]
-
-
-const Item = (props) => {
-    const {dt_txt, min, max, condition} = props
-    return (
-        <View style={styles.item}>
-        <Feather name={'sun'} size={50} color={'white'}/>
-            <Text>{dt_txt}</Text>
-            <Text style={styles.temp}>{min}</Text>
-            <Text style={styles.temp}>{max}</Text>
-        </View>
-    )
-}
-
-const UpcomingWeather = () => {
-    const renderItem = ({item}) => (
-        <Item condition={item.wheather[0].main} dt_txt={item.dt_txt} min={item.main.temp_min} max={item.main.temp_max}/>
-    )
-
-      
-    return (
-        <SafeAreaView styles={styles.container}>
-        <ImageBackground source={require('../../assets/upcoming-background.jpg')} style={styles.image}>
-            <Text>UpcomingWeather</Text>
-        
-            <FlatList data={DATA} renderItem={renderItem} keyExtractor={(item.dt_txt)} />
-        </ImageBackground>
-        </SafeAreaView>
-    )
+  const { container, image } = styles
+  return (
+    <SafeAreaView style={container}>
+      <ImageBackground
+        style={image}
+        source={require('../../assets/upcoming-background.jpg')}
+      >
+        <FlatList
+          data={weatherData}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.dt_txt}
+        />
+      </ImageBackground>
+    </SafeAreaView>
+  )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: StatusBar.currentHeight || 0,
-        backgroundColor: 'royalblue',
-    },
-    item: {
-        padding: 20,
-        marginVertical: 8,
-        marginHorizontal:16,
-        flexDirection:'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        borderWidth:5,
-        backgroundColor:'pink',
-    },
-    temp: {
-        color: 'white',
-        fontSize:20,
-    },
-    image: {
-        flex:1,
-    },
+  container: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
+    backgroundColor: 'royalblue'
+  },
+  image: {
+    flex: 1
+  }
 })
 
-
-export default  UpcomingWeather
+export default UpcomingWeather
